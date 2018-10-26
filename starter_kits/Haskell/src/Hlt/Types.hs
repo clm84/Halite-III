@@ -60,8 +60,8 @@ data GameMap = GameMap { shape :: Shape
 
 data GameState = GameState { turn :: Int
                            , gameMap :: GameMap
-                           , ownId :: PlayerId
-                           , players :: PlayerSet
+                           , ownPlayer :: Player
+                           , allPlayers :: PlayerSet
                            } deriving Show
 
 data GameRec = GameRec { const :: ConstantDict

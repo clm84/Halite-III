@@ -67,8 +67,8 @@ pGameState = do
   gameMap <- pGameMap (width, height)
   return GameState { turn = 0
                    , gameMap = gameMap
-                   , ownId = ownId
-                   , players = players
+                   , ownPlayer = players ! ownId
+                   , allPlayers = players
                    }
 
 pShip :: Int -> PlayerId -> Parser Ship
@@ -136,10 +136,10 @@ updateMap players prevMap = Me.merge dropShip Me.dropMissing updateShip postDO a
 pTurnGameState :: Int -> GameState -> Parser GameState
 pTurnGameState mh prevState = do
   turn <- decimal <* endOfLine
-  players <- pTurnPlayers mh $ players prevState
+  players <- pTurnPlayers mh $ allPlayers prevState
   cells <- updateMap players <$> (pTurnGameMap $ gameMap prevState)
   return GameState { turn = turn
                    , gameMap = GameMap (shape . gameMap $ prevState) cells
-                   , ownId = ownId prevState
-                   , players = players
+                   , ownPlayer = players ! (pid . ownPlayer $ prevState)
+                   , allPlayers = players
                    }

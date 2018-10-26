@@ -26,13 +26,10 @@ getTurn :: GameEnv Int
 getTurn = turn <$> getState
 
 getOwnId :: GameEnv PlayerId
-getOwnId = ownId <$> getState
+getOwnId = pid <$> getOwnPlayer
 
 getOwnPlayer :: GameEnv Player
-getOwnPlayer = do
-  players <- players <$> getState
-  ownId <- getOwnId
-  return $ players ! ownId
+getOwnPlayer = ownPlayer <$> getState
 
 getOwnShipYard :: GameEnv Structure
 getOwnShipYard = shipYard <$> getOwnPlayer
@@ -40,11 +37,17 @@ getOwnShipYard = shipYard <$> getOwnPlayer
 getOwnDropOffs :: GameEnv [Structure]
 getOwnDropOffs = elems . dropOffs <$> getOwnPlayer
 
+getOwnStructs :: GameEnv [Structure]
+getOwnStructs = do
+  shipYard <- getOwnShipYard
+  dropOffs <- getOwnDropOffs
+  return $ shipYard:dropOffs
+
 getOwnShips :: GameEnv [Ship]
 getOwnShips = elems . ships <$> getOwnPlayer
 
 getAllPlayers :: GameEnv [Player]
-getAllPlayers = elems . players <$> getState
+getAllPlayers = elems . allPlayers <$> getState
 
 getAllShipYards :: GameEnv [Structure]
 getAllShipYards = map shipYard <$> getAllPlayers
@@ -52,12 +55,18 @@ getAllShipYards = map shipYard <$> getAllPlayers
 getAllDropOffs :: GameEnv [Structure]
 getAllDropOffs = concat . map (elems . dropOffs) <$> getAllPlayers
 
+getAllStructs :: GameEnv [Structure]
+getAllStructs = do
+  shipYards <- getAllShipYards
+  dropOffs <- getAllDropOffs
+  return $ shipYards ++ dropOffs
+
 getAllShips :: GameEnv [Ship]
 getAllShips = concat . map (elems . ships) <$> getAllPlayers
 
 getPlayer :: PlayerId -> GameEnv Player
 getPlayer pid = do
-  playerMap <- players <$> getState
+  playerMap <- allPlayers <$> getState
   return $ playerMap ! pid
 
 getShipYard :: PlayerId -> GameEnv Structure
