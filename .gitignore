@@ -29,6 +29,7 @@ bld/
 starter_kits/CSharp/bin/*
 starter_kits/CSharp/obj/*
 starter_kits/CSharp/*.txt
+starter_kits/Haskell/.stack-work
 
 # Visual Studo 2015 cache/options directory
 .vs/

@@ -1,0 +1,49 @@
+name:                halite3
+version:             0.1.0.0
+github:              "clm84/Halite-II"
+license:             MIT
+author:              "clm"
+maintainer:          "clm"
+copyright:           "2018 - clm"
+
+extra-source-files:
+- readme.md
+- changelog.md
+
+description:         Please see the readme on GitHub at <https://github.com/clm84/Halite-III>
+
+dependencies:
+- base >= 4.7 && < 5
+- aeson
+- attoparsec
+- bytestring
+- containers
+- io-streams
+- mtl
+- text
+
+library:
+  source-dirs: src
+
+executables:
+  MyBot:
+    main:                MyBot.hs
+    source-dirs:         app
+    ghc-options:
+    - -main-is MyBot
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - halite3
+
+tests:
+  haddock-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - halite3

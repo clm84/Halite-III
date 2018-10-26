@@ -1,0 +1,87 @@
+-- This file has been generated from package.yaml by hpack version 0.28.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: c58a545183cc9e35e09976b0ef33e0dab95c71e76c977f7580e46c206513ad87
+
+name:           halite3
+version:        0.1.0.0
+description:    Please see the readme on GitHub at <https://github.com/clm84/Halite-III>
+homepage:       https://github.com/clm84/Halite-II#readme
+bug-reports:    https://github.com/clm84/Halite-II/issues
+author:         clm
+maintainer:     clm
+copyright:      2018 - clm
+license:        MIT
+build-type:     Simple
+cabal-version:  >= 1.10
+extra-source-files:
+    changelog.md
+    readme.md
+
+source-repository head
+  type: git
+  location: https://github.com/clm84/Halite-II
+
+library
+  exposed-modules:
+      Hlt.Api
+      Hlt.Constants
+      Hlt.Game
+      Hlt.Navigation
+      Hlt.Parser
+      Hlt.Types
+      Hlt.Utils
+  other-modules:
+      Paths_halite3
+  hs-source-dirs:
+      src
+  build-depends:
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , io-streams
+    , mtl
+    , text
+  default-language: Haskell2010
+
+executable MyBot
+  main-is: MyBot.hs
+  other-modules:
+      Paths_halite3
+  hs-source-dirs:
+      app
+  ghc-options: -main-is MyBot -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , halite3
+    , io-streams
+    , mtl
+    , text
+  default-language: Haskell2010
+
+test-suite haddock-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_halite3
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , halite3
+    , io-streams
+    , mtl
+    , text
+  default-language: Haskell2010
